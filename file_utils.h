@@ -13,11 +13,18 @@
  *@Author: Runquan Ye
  ****************************************************************/
 
-struct stat st;
-stat(filename, &st);
-int size = st.st_size;
 
+
+/****************************************************************
+ *This method is going to read the file's content into buffer
+ ****************************************************************/
 int read_file(char* filename, char** buffer);
+
+
+
+/****************************************************************
+ *This method is going to write into the next file
+ ****************************************************************/
 int write_file(char* filename, char *buffeer, int size);
 
 #endif
