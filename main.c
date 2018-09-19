@@ -13,7 +13,7 @@ int main(int argc, char** argv){
 	int i;
 	char ch, ch1;
 	FILE *file1, *file2;
-	char* buffer;
+	//char* buffer, buffer2;
 	long size;
 
 	file1 = fopen(argv[1], "r");
@@ -27,14 +27,16 @@ int main(int argc, char** argv){
 	    	fseek(file1, 0, SEEK_SET);  
 	    
 	    
-	    	buffer = (char*) malloc(size * sizeof(char));
+	    	char* buffer = (char*) malloc(size * sizeof(char));
 
-	    	//fread(buffer, sizeof(char), size, file1); 
-		read_file(argv[1], &buffer);
+	    	char* buffer2 = (char*) malloc(size * sizeof(char));
+
+	    	fread(buffer, sizeof(char), size, file1); 
+		//read_file(argv[1], &buffer);
 	    
-	    	for(long i = 0; i < size/2; ++i){
+	    	for(int i = 0; i < size; ++i){
 	    	
-			buffer[i] = buffer[size-i-1];
+			buffer2[i] = buffer[size-i];
 	    	}
 	}
 
@@ -44,10 +46,10 @@ int main(int argc, char** argv){
 		printf("The result cannot be write.\n");
 		return 3;
 	}else{
-		write_file(argv[2], buffer, size);
-		//fwrite(buffer, sizeof(char), size/2, file2); 
+		//write_file(argv[2], buffer, size);
+		fwrite(buffer2, sizeof(char), size, file2); 
 	}
-
+	free(buffer2);
 	free(buffer);
 	
 	fclose(file1);

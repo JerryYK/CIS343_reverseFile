@@ -1,4 +1,5 @@
 #include "file_utils.h"
+#include <sys/stat.h>
 
 /****************************************************************
  *This is the function C file for running the reverse file method
@@ -11,19 +12,20 @@
  ****************************************************************/
 int read_file(char* filename, char** buffer){
 	
-	/*	
+		
 	struct stat st;
 	stat(filename,&st);
 	int size = st.st_size;
-	*/
-	FILE *file1 = fopen(*filename,"r");
-	fseek(file1, 0, SEEK_END); 
-	long size = ftell(file1); 
-	fseek(file1, 0, SEEK_SET); 
+	
+	FILE *file1 = fopen(filename,"r");
+	//fseek(file1, 0, SEEK_END); 
+	//long size = ftell(file1); 
+	//fseek(file1, 0, SEEK_SET); 
 	
     
-    	fread(*buffer,sizeof(char), size, file1); 
-	return size;
+    	//fread(*buffer,sizeof(char), size, file1); 
+    	fread(*buffer, size, 1, file1); 
+	return 0;
 
 }
 
@@ -33,7 +35,7 @@ int read_file(char* filename, char** buffer){
  *This method is going to write into the next file
  ****************************************************************/
 int write_file(char* filename, char *buffer, int size){
-	FILE *file2 = fopen(*filename,"r");
-	fwrite(*buffer, sizeof(char), size/2, file2); 
+	FILE *file2 = fopen(filename,"r");
+	fwrite(buffer, size, 1, file2); 
 
 }
