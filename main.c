@@ -10,52 +10,60 @@
 
 
 int main(int argc, char** argv){
-	int i;
-	char ch, ch1;
-	FILE *file1, *file2;
-	//char* buffer, buffer2;
-	long size;
+	FILE *file1;
+       	FILE *file2;
+	struct stat st;
+	stat(argv[1],&st);
+	int size = st.st_size;
+	char* buffer;
+	char* outputBuffer;
 
+	//open input file as file1
 	file1 = fopen(argv[1], "r");
 	
+	//error exception handler for file1
 	if(file1 == NULL){
 		printf("The file cannot be read.\n");
 		return 1;
-	}else{
-		fseek(file1, 0, SEEK_END); 
-		size = ftell(file1); 
-	    	fseek(file1, 0, SEEK_SET);  
-	    
-	    
-	    	char* buffer = (char*) malloc(size * sizeof(char));
-
-	    	char* buffer2 = (char*) malloc(size * sizeof(char));
-
-	    	fread(buffer, sizeof(char), size, file1); 
-		//read_file(argv[1], &buffer);
-	    
-	    	for(int i = 0; i < size; ++i){
-	    	
-			buffer2[i] = buffer[size-i];
-	    	}
 	}
 
+	//malloc the heap memory for storing the reading result of the input file
+	buffer = (char*) malloc(size * sizeof(char));
+
+	//malloc the heap memory for storing the result after filping the buffer char
+	outputBuffer = (char*) malloc(size * sizeof(char));
+
+	read_file(argv[1], &buffer);
+	
+	//fliping the char in the buffer 
+	for(int i = 0; i < size; ++i){
+		outputBuffer[i] = buffer[size - i - 1];
+	}
+	
+	//open the output file
+	//if the output file doesn't exist, it will be created
 	file2 = fopen(argv[2], "w");
 	
+	//error exception handler for file2
 	if(file2 == NULL){
 		printf("The result cannot be write.\n");
-		return 3;
+		return 2;
 	}else{
-		//write_file(argv[2], buffer, size);
-		fwrite(buffer2, sizeof(char), size, file2); 
+		write_file(argv[2],outputBuffer, size);
 	}
-	free(buffer2);
+
+	//free the heap memory for the outputBuffer
+	free(outputBuffer);
+
+	//free the heap memory for the buffer
 	free(buffer);
-	
+
+	//close the input file1	
 	fclose(file1);
+
+	//close the output file2
 	fclose(file2);
     
 	return 0;
 	
 }
-

@@ -12,19 +12,17 @@
  ****************************************************************/
 int read_file(char* filename, char** buffer){
 	
-		
+	//get the file's size	
 	struct stat st;
 	stat(filename,&st);
 	int size = st.st_size;
 	
+	//open the file
 	FILE *file1 = fopen(filename,"r");
-	//fseek(file1, 0, SEEK_END); 
-	//long size = ftell(file1); 
-	//fseek(file1, 0, SEEK_SET); 
 	
-    
-    	//fread(*buffer,sizeof(char), size, file1); 
+	//read the file content and store it into the buffer
     	fread(*buffer, size, 1, file1); 
+	
 	return 0;
 
 }
@@ -35,7 +33,11 @@ int read_file(char* filename, char** buffer){
  *This method is going to write into the next file
  ****************************************************************/
 int write_file(char* filename, char *buffer, int size){
-	FILE *file2 = fopen(filename,"r");
+	//open or create the output file
+	FILE *file2 = fopen(filename,"w");
+	
+	//write the buffer context into the output file
 	fwrite(buffer, size, 1, file2); 
-
+	
+	return 0;
 }
