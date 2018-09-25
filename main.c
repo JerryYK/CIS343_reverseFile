@@ -1,5 +1,4 @@
 #include "file_utils.h"
-#include "file_utils.c"
 
 /******************************************************************************
  *This is the main file for running the reverse file method for this assignment
